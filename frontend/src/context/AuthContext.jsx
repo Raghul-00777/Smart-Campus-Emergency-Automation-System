@@ -1,8 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { io } from 'socket.io-client';
-
-const API_URL = '/api';
+import { API_URL } from '../config';
 
 const AuthContext = createContext(null);
 

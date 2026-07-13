@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: smart-campus-server
+    env: docker
+    dockerfilePath: server/Dockerfile
+    branch: main
+    plan: starter
+    buildCommand: ""
+    startCommand: "node server/index.js"
+    envVars:
+      - key: PORT
+        value: "5000"
+      - key: MONGO_URI
+        value: "__SET_ME_IN_RENDER_DASHBOARD__"

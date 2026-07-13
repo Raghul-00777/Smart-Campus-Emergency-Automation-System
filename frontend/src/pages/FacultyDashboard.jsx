@@ -2,12 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { API_URL } from '../config';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/Toast';
 import ThemeToggle from '../components/ThemeToggle';
 import LiveMap from '../components/LiveMap';
-
-const API_URL = '/api';
 
 const FacultyDashboard = () => {
   const { user, logout, socket } = useAuth();

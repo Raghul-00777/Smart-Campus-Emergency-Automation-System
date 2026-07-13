@@ -77,15 +77,19 @@ const PORT = process.env.PORT || 5000;
 
 async function startServer() {
   try {
-    // Start MongoDB Memory Server
-    console.log('Starting MongoDB Memory Server...');
-    const mongoServer = await MongoMemoryServer.create();
-    const mongoUri = mongoServer.getUri();
-    
-    console.log('MongoDB Memory Server started at:', mongoUri);
-    
-    // Connect to memory server
-    await mongoose.connect(mongoUri);
+    // Prefer real MongoDB via MONGO_URI, otherwise start MongoDB Memory Server
+    if (process.env.MONGO_URI) {
+      console.log('Connecting to MongoDB at MONGO_URI...');
+      await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+      console.log('Connected to MongoDB');
+    } else {
+      console.log('Starting MongoDB Memory Server...');
+      const mongoServer = await MongoMemoryServer.create();
+      const mongoUri = mongoServer.getUri();
+      console.log('MongoDB Memory Server started at:', mongoUri);
+      await mongoose.connect(mongoUri);
+      console.log('Connected to MongoDB Memory Server');
+    }
     console.log('Connected to MongoDB Memory Server');
 
     await Attendance.updateMany(
